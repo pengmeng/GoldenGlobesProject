@@ -2,7 +2,7 @@ __author__ = 'mengpeng'
 
 import unittest
 from unittest import TestCase
-from ggp.Tweet import Tweet
+from ggp.tweet import Tweet
 
 
 class TestTweet(TestCase):
