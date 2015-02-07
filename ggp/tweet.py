@@ -24,13 +24,26 @@ class Tweet(object):
 
     @staticmethod
     def frommongo(item):
-        pass
+        tw = Tweet()
+        tw.text = item['text']
+        tw.oid = item['_id']
+        tw.id = item['id']
+        tw.date = item['date']
+        tw.user = (item['user_name'], item['user_id'])
+        return tw
 
     def clean(self):
         pass
 
     def tomongo(self):
-        pass
+        item = {'_id': self.oid,
+                'id': self.id,
+                'text': self.text,
+                'date': self.date,
+                'user_name': self.user[0],
+                'user_id': self.user[1]}
+        return item
 
     def __str__(self):
-        return "id: {0} text: {1}".format(self.id, self.text)
+        return "{oid: {0}, id: {1}, text: {2}, date: {3}, user: {4}}"\
+            .format(self.oid, self.id, self.text, self.date, self.user)
