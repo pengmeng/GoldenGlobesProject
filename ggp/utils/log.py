@@ -13,14 +13,14 @@ DEFAULT_LOGGING = {
             'level': 'WARNING',
             'class': 'logging.StreamHandler',
         },
-        'logfile': {
+        'ggp.log': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler'
         }
     },
     'loggers': {
         'ggp': {
-            'handlers': ['console', 'logfile']
+            'handlers': ['console', 'ggp.log']
         }
     }
 }
