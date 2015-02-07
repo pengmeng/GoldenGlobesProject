@@ -21,7 +21,7 @@ DEFAULT_LOGGING = {
             'formatter': 'precise'
         },
         'logfile': {
-            'filename': 'ggp.log',
+            'filename': './log/ggp.log',
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
             'formatter': 'precise'
