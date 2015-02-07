@@ -45,5 +45,5 @@ class Tweet(object):
         return item
 
     def __str__(self):
-        return "{oid: {0}, id: {1}, text: {2}, date: {3}, user: {4}}"\
-            .format(self.oid, self.id, self.text, self.date, self.user)
+        return "{" + "oid: {0}, id: {1}, text: {2}, date: {3}, user: {4}"\
+            .format(self.oid, self.id, self.text, self.date, self.user) + "}"
