@@ -42,8 +42,8 @@ class MongoJuice(object):
     def insert(self, items):
         self._coll.insert(items)
 
-    def find(self, query, limit=0, sort=None, skip=0):
-        return self._coll.find(query, limit=limit, sort=sort, skip=skip)
+    def find(self, query=None, limit=0, sort=None, skip=0):
+        return self._coll.find(spec=query, limit=limit, sort=sort, skip=skip)
 
     def count(self):
         return self._coll.count()
