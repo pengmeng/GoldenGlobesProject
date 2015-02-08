@@ -21,8 +21,7 @@ class CLI(object):
                 print(v)
             elif k is not 'exit':
                 print('{0}:   {1}'.format(k, v[0]))
-            else:
-                print('{0}:   to exit program'.format(v))
+        print('{0}:   to exit program'.format(self.menu['exit']))
         return self.execfunc()
 
     def execfunc(self):
