@@ -6,7 +6,7 @@ from ggp.crawler.handler import Handler
 class GGPHandler(Handler):
 
     def __init__(self):
-        super.__init__()
+        super(GGPHandler, self).__init__()
 
     def parse(self, html):
         super(GGPHandler, self).save2file(html)
