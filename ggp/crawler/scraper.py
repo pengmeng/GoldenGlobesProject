@@ -37,4 +37,4 @@ if __name__ == '__main__':
     hd = Handler()
     sp = Scraper(urls, hd)
     r = sp.fetch()
-    print(r)
+    print(urls)
