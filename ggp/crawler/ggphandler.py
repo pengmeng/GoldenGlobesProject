@@ -1,6 +1,6 @@
 __author__ = 'mengpeng'
 import re
-from ggp.crawler.handler import Handler
+from handler import Handler
 
 
 class GGPHandler(Handler):
