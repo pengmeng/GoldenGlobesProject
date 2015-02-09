@@ -9,7 +9,7 @@ class GGPHandler(Handler):
         super(GGPHandler, self).__init__()
 
     def parse(self, html):
-        super(GGPHandler, self).save2file(html)
+        #super(GGPHandler, self).save2file(html)
         awards_re = re.compile("<h2>Best.*</h2>")
         nominee_re = re.compile("(tt[0-9]*/\"\s>[A-Za-z0-9&#;\s]*<)")
         awardsraw = awards_re.findall(html)
