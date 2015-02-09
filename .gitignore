@@ -9,6 +9,7 @@ __pycache__/
 .idea/
 log/
 tmp/
+*.json
 
 # C extensions
 *.so
