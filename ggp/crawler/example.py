@@ -2,6 +2,7 @@ __author__ = 'mengpeng'
 
 #First create a folder named tmp under crawler be like this ./crawler/tmp/
 #Import scraper class and GGPHandler class
+import pprint
 from scraper import Scraper
 from ggphandler import GGPHandler
 
@@ -15,7 +16,8 @@ if __name__ == '__main__':
     #result is a dict {'url': handler return}
     #print it out for more information
     result = scraper.fetch()
-    print(result)
+    pp = pprint.PrettyPrinter(indent=0)
+    #pp.pprint(result)
     #this is handle result that contains awards and nominees
     #you can iterate awards for eacha award and get related nominees
-    print(result[urls[0]])
+    pp.pprint(result[urls[0]]['Awards'])
