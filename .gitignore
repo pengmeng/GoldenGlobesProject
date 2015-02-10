@@ -10,6 +10,7 @@ __pycache__/
 log/
 tmp/
 *.json
+*.txt
 
 # C extensions
 *.so
