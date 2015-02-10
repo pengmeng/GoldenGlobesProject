@@ -11,24 +11,25 @@ class GGPHandler(Handler):
     def parse(self, html):
         #super(GGPHandler, self).save2file(html)
         awards_re = re.compile("<h2>Best.*</h2>")
-        movie_re = re.compile("(tt[0-9]*/\"\s>[A-Za-z0-9&#;\s\-\.]*<)")
-        name_re = re.compile("(nm[0-9]*/\"\s>[A-Za-z0-9&#;\s\-\.]*<)")
         awardsraw = awards_re.findall(html)
         awards = [item[4:-5] for item in awardsraw]
         final = {'Awards': awards}
         for i in range(len(awards)):
-            if i < len(awards) - 1:
-                movies = movie_re.findall(html, html.index(awards[i]), html.index(awards[i+1]))
-                names = name_re.findall(html, html.index(awards[i]), html.index(awards[i+1]))
-            else:
-                movies = movie_re.findall(html, html.index(awards[i]))
-                names = name_re.findall(html, html.index(awards[i]))
-            final[awards[i]] = []
-            #print(movies)
-            #print(names)
-            if len(names) == len(movies):
-                for j in range(len(movies)):
-                    final[awards[i]].append(movies[j][13:-1] + ": " + names[j][13:-1])
-            else:
-                final[awards[i]] = [x[13:-1] for x in movies]
+            start = html.index(awards[i])
+            end = len(html) if i == len(awards) - 1 else html.index(awards[i + 1])
+            final[awards[i]] = self.parsesec(html[start:end])
         return final
+
+    def parsesec(self, sec):
+        movie_re = re.compile("(tt[0-9]*/\"\s>[A-Za-z0-9&#;\s\-\.]*<)")
+        name_re = re.compile("(nm[0-9]*/\"\s>[A-Za-z0-9&#;\s\-\.]*<)")
+        movies = movie_re.findall(sec)
+        movies = [x[13:-1] for x in movies]
+        for i in range(len(movies)):
+            start = sec.index(movies[i])
+            end = len(sec) if i == len(movies) - 1 else sec.index(movies[i + 1])
+            names = name_re.findall(sec, start, end)
+            if names:
+                names = [x[13:-1] for x in names]
+                movies[i] += ': ' + ', '.join(names)
+        return movies

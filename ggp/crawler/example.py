@@ -13,11 +13,12 @@ if __name__ == '__main__':
     #get handler instance
     handler = GGPHandler()
     #get scraper instance with specific urls and handler
-    scraper = Scraper(urls, handler)
+    scraper = Scraper(urls[0:1], handler)
     #result is a dict {'url': handler return}
     #print it out for more information
     result = scraper.fetch()
     #this is handle result that contains awards and nominees
     #you can iterate awards for eacha award and get related nominees
+    #pprint.pprint(result[urls[0]]['Best Original Song - Motion Picture'])
     pprint.pprint(result[urls[0]])
-    pprint.pprint(result[urls[1]])
+    #print(len(result[urls[0]]['Awards']), len(result[urls[0]]))
