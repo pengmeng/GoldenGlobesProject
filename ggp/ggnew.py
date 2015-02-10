@@ -5,6 +5,10 @@ import pdb
 import pprint
 from nltk.corpus import stopwords
 from nltk.util import ngrams
+from crawler.scraper import Scraper
+from crawler.ggphandler import GGPHandler
+
+
 
 sentenceTokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
 with open('goldenglobes.json', 'r') as f:
@@ -18,7 +22,7 @@ wordTokenizer = TreebankWordTokenizer()
 
 
 Award_Categories = ["Best Motion Picture - Drama",
-"Best Motion Picure - Comedy or Musical",
+"Best Motion Picture - Comedy or Musical",
 "Best Director - Motion Picture",
 "Best Performance by an Actor in a Motion Picture - Drama",
 "Best Performance by an Actor in a Motion Picture - Comedy or Musical",
@@ -40,8 +44,8 @@ Award_Categories = ["Best Motion Picture - Drama",
 "Best Performance by an Actress in a Television Series - Musical or Comedy",
 "Best Performance by an Actor in a Mini-Series or a Motion Picture Made for Television",
 "Best Performance by an Actress in a Mini-Series or a Motion Picture Made for Television",
-"Best Supporting Actor in a TV Series - Drama, Musical or Comedy",
-"Best Supporting Actress in a TV Series - Drama, Musical or Comedy",
+"Best Performance by an Actor in a Supporting Role in a Series, Mini-Series or Motion Picture Made for Television",
+"Best Performance by an Actress in a Supporting Role in a Series, Mini-Series or Motion Picture Made for Television",
 "Best Mini-Series or Motion Picture Made for Television",
 "Cecil B. DeMille Award",
 "Host of the Show"]
@@ -66,7 +70,7 @@ Category_keywords = [["best picture","drama"],
 ["best tv series","comedy"],
 ["best actor","tv series drama"],
 ["best actress","tv series drama"],
-["best actor","tv series comedy"],
+["best actor tv","comedy"],
 ["best actress","tv series comedy"],
 ["best actor","miniseries"],
 ["best actress","miniseries"],
@@ -82,7 +86,28 @@ remove_keywords = ["best","picture" , "actor","actress","hosts","hosting","drama
 ,"foreign","film","tv","series","mini","supporting","screenplay","presenting","presented","musical",
 "comedy","motion","animated","feature","wins","winner","won","cecil", "b", "demille","goldenglobes","score","miniseries","award"]
 
+Nominees = dict()
 
+
+def get_nominees(index):
+	 #urls must be in list, even though only one url
+    urls = ["http://www.imdb.com/event/ev0000292/2013",
+    "http://www.imdb.com/event/ev0000292/2015"]
+    #get handler instance
+    handler = GGPHandler()
+    #get scraper instance with specific urls and handler
+    scraper = Scraper(urls, handler)
+    #result is a dict {'url': handler return}
+    #print it out for more information
+    result = scraper.fetch()
+    #pp = pprint.PrettyPrinter(indent=0)
+    #pp.pprint(result)
+    #this is handle result that contains awards and nominees
+    #you can iterate awards for eacha award and get related nominees
+    #pp.pprint(result[urls[index]])
+    Nominees = result[urls[index]]
+    return Nominees
+    #pdb.set_trace()
 
 def create_useful_tweet_bank():
 	word = ["winner","wins","hosts","presenting","won","hosting"]
@@ -111,6 +136,13 @@ def get_winners():
 	for x in range(0,Num_of_Category,1):
 		find_winners(Award_Categories[x],Category_keywords[x])
 	return
+
+
+def get_fullName(word,category):
+	#pdb.set_trace()
+	for each in Nominees[category]:
+		if each.lower().find(word) != -1:
+			return each
 
 
 
@@ -149,10 +181,15 @@ def find_winners(category,keywords):
 	file.close()
 	if temp_dict: 
 		abc = max(temp_dict, key = temp_dict.get)
-		if category == "Host of the Show":
+		if (category != "Cecil B. DeMille Award") and (category != "Host of the Show"):
+			name = get_fullName(abc,category)
+			#pdb.set_trace()
+		if (category == "Host of the Show"):
 			print (category +":"+"%s %s"%abc)
-		else:
+		elif(category == "Cecil B. DeMille Award"):
 			print (category+": "+str(abc))
+		else:
+			print (category+": "+str(name))
 	if category == "Host of the Show":
 		temp_dict.pop(abc, None)
 		xyz = max(temp_dict, key = temp_dict.get)
@@ -163,17 +200,18 @@ def find_winners(category,keywords):
 
 
 def main():
+	
 	create_useful_tweet_bank()
 	print "\n\n### WINNERS & HOSTS ### \n"
 	get_winners()
-	#get_host()
-	#find_winners(Award_Categories[0],Category_keywords[0])
+	#find_winners(Award_Categories[19],Category_keywords[19])
 	
 	#pdb.set_trace()
 
 
 if __name__ == '__main__':
-    main()
+	Nominees = get_nominees(0)
+	main()
 
 
 #pdb.set_trace()
