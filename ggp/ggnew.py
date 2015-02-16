@@ -3,6 +3,7 @@ import nltk
 import re, string
 import pdb
 import pprint
+import time
 from nltk.corpus import stopwords
 from nltk.util import ngrams
 from crawler.scraper import Scraper
@@ -322,7 +323,7 @@ def main():
 	hosts = find_host()
 	for a in range(0,2,1):
 		print(str(hosts[a]))
-	print "\n\n***************  WINNERS  *******************\n"
+	print ("\n\n***************  WINNERS  *******************\n")
 	get_winners()
 	presenter = find_presenters()
 	print("\n\n***********  PRESENTERS LIST ************")
@@ -339,7 +340,7 @@ def main():
 		print(str(worst_dress[j]))
 
 	
-
+    time.sleep(5)
 	#find_winners(Award_Categories[19],Category_keywords[19])
 	
 	#pdb.set_trace()
