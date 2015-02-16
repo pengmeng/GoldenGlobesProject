@@ -443,7 +443,6 @@ def match_presenters(category,keywords,PRESENTERS):
 
 
 def main():
-<<<<<<< HEAD
     create_useful_tweet_bank()
     print("\n\n********  HOSTS OF THE SHOW  ***************")
     HOSTS = find_host()
@@ -454,20 +453,9 @@ def main():
     presenter = find_presenters()
     print("\n\n***********  PRESENTERS LIST ************")
     for k in range(0,len(presenter),1):
-=======
+        print(str(presenter[k]))
 	
-	create_useful_tweet_bank()
-	print("\n\n********  HOSTS OF THE SHOW  ***************")
-	hosts = find_host()
-	for a in range(0,2,1):
-		print(str(hosts[a]))
-	print ("\n\n***************  WINNERS  *******************\n")
-	get_winners()
-	presenter = find_presenters()
-	print("\n\n***********  PRESENTERS LIST ************")
-	for k in range(0,len(presenter),1):
->>>>>>> ee6e06eea590ff22e61ee8369fd0851bd6a3b13a
-		print(str(presenter[k]))
+		
     BEST_DRESSED = find_best_dressed()
     print("\n*************  FUN GOALS  *****************\n")
     print ("\n\n********  BEST DRESSED CELEBS  ************")
@@ -478,7 +466,6 @@ def main():
     for j in range(0,len(worst_dress),1):
 		print(str(worst_dress[j]))
 
-<<<<<<< HEAD
     print ("\n\n******* positive sentiments *********")
     sentiments = find_sentiments("positive")
     flag = 0
@@ -500,9 +487,7 @@ def main():
     for j in range(0,len(match),1):
         print(str(match[j]))'''
 
-=======
-	
->>>>>>> ee6e06eea590ff22e61ee8369fd0851bd6a3b13a
+
 	#find_winners(Award_Categories[19],Category_keywords[19])
 	
 	#pdb.set_trace()
