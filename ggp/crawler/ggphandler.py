@@ -9,7 +9,6 @@ class GGPHandler(Handler):
         super(GGPHandler, self).__init__()
 
     def parse(self, html):
-        #super(GGPHandler, self).save2file(html)
         awards_re = re.compile("<h2>Best.*</h2>")
         awardsraw = awards_re.findall(html)
         awards = [item[4:-5] for item in awardsraw]

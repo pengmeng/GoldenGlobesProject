@@ -1,5 +1,6 @@
 __author__ = 'mengpeng'
 import urllib
+import os
 from handler import Handler
 
 
@@ -29,8 +30,17 @@ class Scraper(object):
         result = {}
         for url in self._urls:
             html = urllib.urlopen(url).read()
+            self._save2file(url, html)
             result[url] = self._handler.parse(html)
         return result
+
+    def _save2file(self, url, content):
+        if not os.path.exists('./tmp'):
+            os.mkdir('./tmp')
+        filename = "./tmp/" + str(hash(url) & 0xffffffff) + ".html"
+        with open(filename, 'w') as outfile:
+            outfile.write(content)
+            outfile.flush()
 
 if __name__ == '__main__':
     urls = ["http://www.imdb.com/event/ev0000292/2013"]

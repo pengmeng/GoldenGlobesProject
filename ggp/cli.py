@@ -32,7 +32,7 @@ class CLI(object):
     def execfunc(self):
         num = raw_input('Please enter menu #: ')
         if num == self.menu['exit']:
-            print('Exiting...')
+            #print('Exiting...')
             return False
         if num in self.menu:
             self.menu[num][1](*self.menu[num][2])
@@ -40,8 +40,8 @@ class CLI(object):
             print('#{0} is not in the menu.'.format(num))
         return True
 
-    def samplefunc(self, *args):
-        print('#{0} is selected and {1} is executed.'.format(*args))
+    def samplefunc(self, num, name):
+        print('#{0} is selected and {1} is executed.'.format(num, name))
 
 
 if __name__ == '__main__':
