@@ -51,10 +51,10 @@ def feedresult(year):
                                              "method_description": ""}},
                           "mappings": {
                                   "nominees": {
-                                      "method": "",
+                                      "method": "scraped",
                                       "method_description": ""},
                                   "presenters": {
-                                      "method": "",
+                                      "method": "detected",
                                       "method_description": ""},    
                                   }
                           }
