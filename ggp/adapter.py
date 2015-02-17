@@ -45,7 +45,7 @@ def print_positive(year):
 
 
 def print_sympathy(year):
-    print("\n\n***************  Should Have Won ***************\n")
+    print("\n\n***************  Honorable Mention (Should Have Won) ***************\n")
     _printer(digest.Result[year]['sympathy'][0:5])
 
 

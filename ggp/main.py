@@ -20,13 +20,13 @@ def createcli():
     for each in cli13, cli15:
         year = 2013 if each is cli13 else 2015
         each.register('Hosts', adapter.print_hosts, year)
-        each.register('Winners', adapter.print_winners, year)
-        each.register('Presenters', adapter.print_presenters, year)
-        each.register('Best Dressed', adapter.print_bestdressed, year)
-        each.register('Worst Dressed', adapter.print_worstdressed, year)
+        each.register('Winners\' List', adapter.print_winners, year)
+        each.register('Presenters\' List', adapter.print_presenters, year)
+        each.register('Best Dressed Celebrities', adapter.print_bestdressed, year)
+        each.register('Worst Dressed Celebrities', adapter.print_worstdressed, year)
         each.register('Positive Sentiment', adapter.print_positive, year)
-        each.register('Sympathy Sentiment', adapter.print_sympathy, year)
-        each.register('Matched Presenters', adapter.print_match, year)
+        each.register('Honorable Mention', adapter.print_sympathy, year)
+        each.register('Match Presenters with Awards', adapter.print_match, year)
         each.exitcomm('q')
     return maincli
 
