@@ -49,6 +49,13 @@ def print_sympathy(year):
     _printer(digest.Result[year]['sympathy'][0:5])
 
 
+def print_match(year):
+    print("\n\n***************  Matched Presenters ***************\n")
+    match = digest.Result[year]['match']
+    for k, v in match.iteritems():
+        print(k + ' presented the award for ' + v)
+
+
 def _printer(obj):
     for each in obj:
         print(each)

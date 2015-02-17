@@ -25,6 +25,7 @@ def createcli():
         each.register('Worst Dressed', adapter.print_worstdressed, year)
         each.register('Positive Sentiment', adapter.print_positive, year)
         each.register('Sympathy Sentiment', adapter.print_sympathy, year)
+        each.register('Matched Presenters', adapter.print_match, year)
         each.exitcomm('q')
     return maincli
 

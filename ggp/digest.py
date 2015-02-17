@@ -384,16 +384,17 @@ def find_sentiments(type):
     return sentiments
 
 
-def match_presenters(category, keywords, PRESENTERS):
+def match_presenters(category,keywords,PRESENTERS):
     # This function will find the presenters of the show.
     results = dict()
     filter_tweets = []
+    presenter_list = dict()
     stopwords = nltk.corpus.stopwords.words('english')
     for tweet in new_tweets:
         possible_winners = list()
         tt = tweet.lower()
         host_words = ["presents the", "presenting the"]
-        tn = re.sub(r'[^a-zA-Z0-9 ]', r'', tweet)
+        tn = re.sub(r'[^a-zA-Z0-9 ]',r'',tweet)
         stopwords = nltk.corpus.stopwords.words('english')
         word_list = tn.split()
         res = ' '.join([i for i in word_list if i.lower() not in stopwords])
@@ -403,18 +404,18 @@ def match_presenters(category, keywords, PRESENTERS):
     for tw in filter_tweets:
         for name in PRESENTERS:
             if name in tw:
-                for i in range(0, Num_of_Category, 1):
-                    if ((keywords[i][0] != "best")) and (
-                                (keywords[i][0] in tw.lower()) or (keywords[i][1] in tw.lower())):
-                        print ("\n\n")
-                        print tw
-                        print keywords[i]
-                        print name
-                        break
-    return
+                for i in range(0,Num_of_Category,1):
+                    if ((keywords[i][0] != "best"))and ((keywords[i][0] in tw.lower()) or (keywords[i][1] in tw.lower())):
+                        if name in presenter_list:
+                            continue
+                        else:
+                            presenter_list[name] = category[i]
+
+    return presenter_list
 
 Result = defaultdict(dict)
-Result = {2013: defaultdict(dict), 2015: defaultdict(dict)}
+Result[2013] = defaultdict(dict)
+Result[2015] = defaultdict(dict)
 
 
 def loadsys(year):
@@ -429,6 +430,7 @@ def loadsys(year):
     Result[year]['worstdressed'] = find_worst_dressed(Result[year]['bestdressed'])
     Result[year]['positive'] = find_sentiments('positive')
     Result[year]['sympathy'] = find_sentiments('sympathy')
+    Result[year]['match'] = match_presenters(Award_Categories, Category_keywords, Result[year]['presenters'])
 
 
 def loadfile(year):

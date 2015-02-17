@@ -8,8 +8,8 @@ from nltk.util import ngrams
 from crawler.scraper import Scraper
 from crawler.ggphandler import GGPHandler
 
-#with open('gg15mini.json') as json_data:
-with open('gg2013.json') as json_data:
+with open('gg15mini.json') as json_data:
+#with open('gg2013.json') as json_data:
 	tweets = json.load(json_data)
 tweet_text = [tweet['text'] for tweet in tweets]
 
@@ -17,7 +17,17 @@ from nltk.tokenize import TreebankWordTokenizer
 wordTokenizer = TreebankWordTokenizer()
 
 
-Award_Categories = ["Best Motion Picture - Drama",
+new_tweets = []
+NUMBER_OF_BEST_DRESSED = 5
+NUMBER_OF_PRESENTERS = 26
+BIGRAM_RE = "([A-Z][a-z]+\s[A-Z][-'a-zA-Z]+)"
+BEST_DRESSED = []
+presenter_tweet = []
+PRESENTERS = []
+HOSTS = []
+WINNER_LIST = []
+
+'''Award_Categories = ["Best Motion Picture - Drama",
 "Best Motion Picture - Comedy or Musical",
 "Best Director - Motion Picture",
 "Best Performance by an Actor in a Motion Picture - Drama",
@@ -43,10 +53,10 @@ Award_Categories = ["Best Motion Picture - Drama",
 "Best Performance by an Actor in a Supporting Role in a Series, Mini-Series or Motion Picture Made for Television",
 "Best Performance by an Actress in a Supporting Role in a Series, Mini-Series or Motion Picture Made for Television",
 "Best Mini-Series or Motion Picture Made for Television",
-"Cecil B. DeMille Award"]
+"Cecil B. DeMille Award"]'''
 
 
-'''Award_Categories = ["Best Motion Picture - Drama",
+Award_Categories = ["Best Motion Picture - Drama",
 "Best Motion Picture - Comedy or Musical",
 "Best Director - Motion Picture",
 "Best Performance by an Actor in a Motion Picture - Drama",
@@ -72,7 +82,7 @@ Award_Categories = ["Best Motion Picture - Drama",
 "Best Performance by an Actor in a Supporting Role in a Series, Mini-Series or Motion Picture Made for Television",
 "Best Performance by an Actress in a Supporting Role in a Series, Mini-Series or Motion Picture Made for Television",
 "Best Mini-Series or Motion Picture Made for Television",
-"Cecil B. DeMille Award"]'''
+"Cecil B. DeMille Award"]
 
 
 
@@ -104,15 +114,7 @@ Category_keywords = [["best picture","drama"],
 ["cecil","DeMille"]]
 
 
-new_tweets = []
 Num_of_Category = len(Award_Categories)
-NUMBER_OF_BEST_DRESSED = 5
-NUMBER_OF_PRESENTERS = 26
-BIGRAM_RE = "([A-Z][a-z]+\s[A-Z][-'a-zA-Z]+)"
-BEST_DRESSED = []
-presenter_tweet = []
-PRESENTERS = []
-HOSTS = []
 
 remove_keywords = ["best","picture" , "actor","actress","hosts","hosting","drama","golden","globes",
 "movie","director","song","original","foreign","film","tv","series","mini","supporting","screenplay",
@@ -172,49 +174,50 @@ def get_fullName(word,category):
 
 
 
+
 def find_winners(category,keywords):
-	new = []
-	file = open("tempfile.txt", "w")
-	temp_dict = dict()
-	for twt in new_tweets:
-		t = twt.lower()
-		if ((keywords[0] in t)  and (keywords[1] in t)):
-			new.append(twt)
-			tn = re.sub(r'[^a-zA-Z0-9 ]',r'',twt)
-			stopwords = nltk.corpus.stopwords.words('english')
-			word_list = tn.split()
-			res = ' '.join([i for i in word_list if i.lower() not in stopwords])
-			left = res.lower()
-			leftout = left.split()
-			final_sentence = ' '.join([i for i in leftout if i.lower() not in remove_keywords])
-			tokens = wordTokenizer.tokenize(final_sentence)
-			if category == "Host of the Show":
-				big = nltk.bigrams(tokens)
-				for key in big:
-					if key in temp_dict:
-						temp_dict[key] += 1
-					else:
-						temp_dict[key] = 1
-			else:
-				for k in tokens:
-					if k in temp_dict:
-						temp_dict[k] += 1
-					else:
-						temp_dict[k] = 1
-			#pdb.set_trace()
-			file.write(final_sentence)
-			file.write("\n")
-	file.close()
-	if temp_dict: 
-		abc = max(temp_dict, key = temp_dict.get)
-		if (category != "Cecil B. DeMille Award"):
-			name = get_fullName(abc,category)
-			#pdb.set_trace()
-		
-		if(category == "Cecil B. DeMille Award"):
-			print (category+": "+str(abc))
-		else:
-			print (category+": "+str(name))
+    new = []
+    file = open("tempfile.txt", "w")
+    temp_dict = dict()
+    for twt in new_tweets:
+        t = twt.lower()
+        if ((keywords[0] in t)  and (keywords[1] in t)):
+            new.append(twt)
+            tn = re.sub(r'[^a-zA-Z0-9 ]',r'',twt)
+            stopwords = nltk.corpus.stopwords.words('english')
+            word_list = tn.split()
+            res = ' '.join([i for i in word_list if i.lower() not in stopwords])
+            left = res.lower()
+            leftout = left.split()
+            final_sentence = ' '.join([i for i in leftout if i.lower() not in remove_keywords])
+            tokens = wordTokenizer.tokenize(final_sentence)
+            if category == "Host of the Show":
+                big = nltk.bigrams(tokens)
+                for key in big:
+                    if key in temp_dict:
+                        temp_dict[key] += 1
+                    else:
+                        temp_dict[key] = 1
+            else:
+                for k in tokens:
+                    if k in temp_dict:
+                        temp_dict[k] += 1
+                    else:
+                        temp_dict[k] = 1
+            #pdb.set_trace()
+            file.write(final_sentence)
+            file.write("\n")
+    file.close()
+    if temp_dict: 
+        abc = max(temp_dict, key = temp_dict.get)
+        if (category != "Cecil B. DeMille Award"):
+            name = get_fullName(abc,category)
+            #pdb.set_trace()
+        
+        if(category == "Cecil B. DeMille Award"):
+            print (category+": "+str(abc))
+        else:
+            print (category+": "+str(name))
 	
 
 
@@ -410,6 +413,7 @@ def match_presenters(category,keywords,PRESENTERS):
     # This function will find the presenters of the show.
     results = dict()
     filter_tweets = []
+    presenter_list = dict()
     stopwords = nltk.corpus.stopwords.words('english')
     for tweet in new_tweets:
         possible_winners = list()
@@ -427,14 +431,12 @@ def match_presenters(category,keywords,PRESENTERS):
             if name in tw:
                 for i in range(0,Num_of_Category,1):
                     if ((keywords[i][0] != "best"))and ((keywords[i][0] in tw.lower()) or (keywords[i][1] in tw.lower())):
-                        print ("\n\n")
-                        print tw
-                        print keywords[i]
-                        print name
-                        break
+                        if name in presenter_list:
+                            continue
+                        else:
+                            presenter_list[name] = category[i]
                         
-    #pdb.set_trace()
-    return 
+    return presenter_list
 
 
 
@@ -482,8 +484,13 @@ def main():
     for i in range(0,5,1):
         print(str(sentiments[i]))
 
-    '''match = match_presenters(Award_Categories,Category_keywords,presenter)
-    print ("\n\n********   test   ***********")
+
+    print ("\n\n##### match presenters with categories #######")
+    pres_list = match_presenters(Award_Categories,Category_keywords,presenter)
+    for key, value in pres_list.iteritems():
+        print(key+" presented the award for "+ value+"\n")
+
+    '''print ("\n\n********   test   ***********")
     for j in range(0,len(match),1):
         print(str(match[j]))'''
 
@@ -494,7 +501,7 @@ def main():
 
 
 if __name__ == '__main__':
-	Nominees = get_nominees(0)
+	Nominees = get_nominees(1)
 	main()
 
 
