@@ -1,6 +1,7 @@
 __author__ = 'mengpeng'
 from cli import CLI
 import adapter
+import json
 """
 Main entrance of the project
 """
@@ -31,11 +32,13 @@ def createcli():
 
 
 def generatejsonfile():
-    pass
+    for each in 2013, 2015:
+        with open('gg{0}answer.json'.format(each), 'w') as f:
+            f.write(json.dumps(feedresult(each), indent=4, separators=(',', ': ')))
 
 
 def feedresult(year):
-    result = adapter.getResult()
+    result = adapter.getResult()[year]
     rjson = {"metadata": {"year": year,
                           "hosts": {"method": "detected",
                                     "method_description": ""},
@@ -45,26 +48,19 @@ def feedresult(year):
                                      "method_description": ""},
                           "presenters": {
                               "method": "detected",
-                              "method_description": ""}
-                          },
-             "data": {"unstructured": {"hosts": result[year]['hosts'],
-                                       "winners": [x for x in result[year]['winners'].itervalues()],
-                                       "awards": [x for x in result[year]['winners'].iterkeys()],
-                                       "presenters": result[year]['presenters'],
-                                       "nominees": [x for y in result[year]['nominees'].itervalues() for x in y]},
-                      "structured": {
-                          
-                      }}}
-
-    for x in result[year]['nominees'].iterkeys()
-      rjson["data"]["structured"][x] = {"nominees": result[year]["nominees"][x],
-                                        "winners": result[year]["winners"][x],
-                                        "presenters": []}                    
+                              "method_description": ""}},
+             "data": {"unstructured": {"hosts": result['hosts'],
+                                       "winners": [x for x in result['winners'].itervalues()],
+                                       "awards": [x for x in result['winners'].iterkeys()],
+                                       "presenters": result['presenters'],
+                                       "nominees": [x for y in result['nominees'].itervalues() for x in y]},
+                      "structured": {}}}
+    for x in result['nominees'].iterkeys():
+        rjson["data"]["structured"][x] = {"nominees": result["nominees"][x],
+                                          "winners": result["winners"][x],
+                                          "presenters": []}
+    return rjson
 
 if __name__ == '__main__':
     menu = createcli()
-    try:
-        menu.show()
-    except KeyError and TypeError:
-        print('Please load data first!')
-        menu.show()
+    menu.show()

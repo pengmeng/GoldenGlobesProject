@@ -61,7 +61,7 @@ Award_Categories_15 = ["Best Motion Picture - Drama",
                        "Best Performance by an Actor in a Television Series - Drama",
                        "Best Performance by an Actress in a Television Series - Drama",
                        "Best Performance by an Actor in a Television Series - Comedy or Musical",
-                       "Best Performance by an Actress in a Motion Picture - Comedy or Musical",
+                       "Best Performance by an Actress in a Television Series - Comedy or Musical",
                        "Best Performance by an Actor in a Mini-Series or a Motion Picture Made for Television",
                        "Best Performance by an Actress in a Mini-Series or a Motion Picture Made for Television",
                        "Best Performance by an Actor in a Supporting Role in a Series, Mini-Series or Motion Picture Made for Television",
@@ -431,6 +431,7 @@ def loadsys(year):
     Result[year]['positive'] = find_sentiments('positive')
     Result[year]['sympathy'] = find_sentiments('sympathy')
     Result[year]['match'] = match_presenters(Award_Categories, Category_keywords, Result[year]['presenters'])
+    Nominees.pop('Awards')
     Result[year]['nominees'] = Nominees
 
 
