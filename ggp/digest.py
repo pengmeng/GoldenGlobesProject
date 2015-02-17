@@ -431,6 +431,7 @@ def loadsys(year):
     Result[year]['positive'] = find_sentiments('positive')
     Result[year]['sympathy'] = find_sentiments('sympathy')
     Result[year]['match'] = match_presenters(Award_Categories, Category_keywords, Result[year]['presenters'])
+    Result[year]['nominees'] = Nominees
 
 
 def loadfile(year):

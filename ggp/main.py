@@ -52,7 +52,7 @@ def feedresult(year):
                                        "winners": [x for x in result[year]['winners'].itervalues()],
                                        "awards": [x for x in result[year]['winners'].iterkeys()],
                                        "presenters": result[year]['presenters'],
-                                       "nominees": []},
+                                       "nominees": [x for y in result[year]['nominees'].itervalues() for x in y]},
                       "structured": {}}}
 
 
