@@ -44,20 +44,20 @@ def feedresult(year):
                               "hosts": {"method": "detected",
                                         "method_description": "We first reduced the corpus of tweets by filtering by words such as 'hosted', 'hosts', 'hosting'. Then we found the proper nouns with the most frequency among those tweets and cross-checked them with our nominee list."},
                               "nominees": {"method": "scraped",
-                                           "method_description": "We used a web crawler to scrape the nominees from a webpage"},
+                                           "method_description": "We write a generic and scalable crawler framework to scrape data from web."},
                               "awards": {"method": "hardcoded",
                                          "method_description": ""},
                               "presenters": {"method": "detected",
                                              "method_description": "We reduced the corpus of tweets by filtering by words such as 'presented', 'presenting', 'presents'. Then we found the proper nouns with the most frequentcy among the tweets and returned them."}},
                           "mappings": {
-                                  "nominees": {
-                                      "method": "scraped",
-                                      "method_description": ""},
-                                  "presenters": {
-                                      "method": "detected",
-                                      "method_description": "We used the same method as for identifying presenter names, however we also looked for the appearance of an award name."},    
-                                  }
-                          },
+                              "nominees": {
+                                  "method": "scraped",
+                                  "method_description": "We write a generic and scalable crawler framework to scrape data from web."},
+                              "presenters": {
+                                  "method": "detected",
+                                  "method_description": "We used the same method as for identifying presenter names, however we also looked for the appearance of an award name."},
+                              }
+    },
              "data": {"unstructured": {"hosts": result['hosts'],
                                        "winners": [x for x in result['winners'].itervalues()],
                                        "awards": [x for x in result['winners'].iterkeys()],
