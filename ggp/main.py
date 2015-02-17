@@ -42,20 +42,20 @@ def feedresult(year):
     rjson = {"metadata": {"year": year,
                           "names": {
                               "hosts": {"method": "detected",
-                                        "method_description": ""},
+                                        "method_description": "We first reduced the corpus of tweets by filtering by words such as 'hosted', 'hosts', 'hosting'. Then we found the proper nouns with the most frequency among those tweets and cross-checked them with our nominee list."},
                               "nominees": {"method": "scraped",
-                                           "method_description": ""},
+                                           "method_description": "We used a web crawler to scrape the nominees from a webpage"},
                               "awards": {"method": "hardcoded",
-                                         "method_description": "We found a webpage listing all of the awards and made an array of them."},
+                                         "method_description": ""},
                               "presenters": {"method": "detected",
-                                             "method_description": ""}},
+                                             "method_description": "We reduced the corpus of tweets by filtering by words such as 'presented', 'presenting', 'presents'. Then we found the proper nouns with the most frequentcy among the tweets and returned them.}},
                           "mappings": {
                                   "nominees": {
-                                      "method": "",
+                                      "method": "scraped",
                                       "method_description": ""},
                                   "presenters": {
-                                      "method": "",
-                                      "method_description": ""},    
+                                      "method": "detected",
+                                      "method_description": "We used the same method as for identifying presenter names, however we also looked for the appearance of an award name."},    
                                   }
                           }
              "data": {"unstructured": {"hosts": result['hosts'],
