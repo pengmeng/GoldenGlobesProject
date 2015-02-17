@@ -46,18 +46,18 @@ def feedresult(year):
                               "nominees": {"method": "scraped",
                                            "method_description": ""},
                               "awards": {"method": "hardcoded",
-                                         "method_description": "We found a webpage listing all of the awards and made an array of them."},
+                                         "method_description":
+                                             "We found a webpage listing all of the awards and made an array of them."},
                               "presenters": {"method": "detected",
                                              "method_description": ""}},
                           "mappings": {
-                                  "nominees": {
-                                      "method": "",
-                                      "method_description": ""},
-                                  "presenters": {
-                                      "method": "",
-                                      "method_description": ""},    
-                                  }
-                          }
+                              "nominees": {
+                                  "method": "",
+                                  "method_description": ""},
+                              "presenters": {
+                                  "method": "",
+                                  "method_description": ""},
+                              }},
              "data": {"unstructured": {"hosts": result['hosts'],
                                        "winners": [x for x in result['winners'].itervalues()],
                                        "awards": [x for x in result['winners'].iterkeys()],
