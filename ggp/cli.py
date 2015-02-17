@@ -23,7 +23,7 @@ class CLI(object):
     def _print(self):
         for k, v in self.menu.iteritems():
             if k is 'description':
-                print(v)
+                print('\n' + v)
                 print('-'*len(v))
             elif k is not 'exit':
                 print('{0}:   {1}'.format(k, v[0]))
