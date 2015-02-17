@@ -33,10 +33,32 @@ def generatejsonfile():
     pass
 
 
+def feedresult(year):
+    result = adapter.getResult()
+    rjson = {"metadata": {"year": year,
+                          "hosts": {"method": "detected",
+                                    "method_description": ""},
+                          "nominees": {"method": "scraped",
+                                       "method_description": ""},
+                          "awards": {"method": "hardcoded",
+                                     "method_description": ""
+                          },
+                          "presenters": {
+                              "method": "detected",
+                              "method_description": ""
+                          }},
+             "data": {"unstructured": {"hosts": result[year]['hosts'],
+                                       "winners": [x for x in result[year]['winners'].itervalues()],
+                                       "awards": [x for x in result[year]['winners'].iterkeys()],
+                                       "presenters": result[year]['presenters'],
+                                       "nominees": []},
+                      "structured": {}}}
+
+
 if __name__ == '__main__':
     menu = createcli()
     try:
         menu.show()
-    except KeyError:
+    except KeyError and TypeError:
         print('Please load data first!')
         menu.show()

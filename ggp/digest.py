@@ -414,7 +414,7 @@ def match_presenters(category, keywords, PRESENTERS):
     return
 
 Result = defaultdict(dict)
-Result = {2013: {}, 2015: {}}
+Result = {2013: defaultdict(dict), 2015: defaultdict(dict)}
 
 
 def loadsys(year):
