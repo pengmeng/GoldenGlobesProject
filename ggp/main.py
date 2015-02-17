@@ -42,19 +42,24 @@ def feedresult(year):
                           "nominees": {"method": "scraped",
                                        "method_description": ""},
                           "awards": {"method": "hardcoded",
-                                     "method_description": ""
-                          },
+                                     "method_description": ""},
                           "presenters": {
                               "method": "detected",
-                              "method_description": ""
-                          }},
+                              "method_description": ""}
+                          },
              "data": {"unstructured": {"hosts": result[year]['hosts'],
                                        "winners": [x for x in result[year]['winners'].itervalues()],
                                        "awards": [x for x in result[year]['winners'].iterkeys()],
                                        "presenters": result[year]['presenters'],
                                        "nominees": [x for y in result[year]['nominees'].itervalues() for x in y]},
-                      "structured": {}}}
+                      "structured": {
+                          
+                      }}}
 
+    for x in result[year]['nominees'].iterkeys()
+      rjson["data"]["structured"][x] = {"nominees": result[year]["nominees"][x],
+                                        "winners": result[year]["winners"][x],
+                                        "presenters": []}                    
 
 if __name__ == '__main__':
     menu = createcli()
